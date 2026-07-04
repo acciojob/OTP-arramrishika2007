@@ -4,26 +4,24 @@ codes[0].focus();
 
 codes.forEach((code, index) => {
 
-  code.addEventListener("keydown", (e) => {
+  code.addEventListener("input", () => {
+    code.value = code.value.slice(0, 1);
 
-    if (e.key >= "0" && e.key <= "9") {
-      code.value = "";
-
-      setTimeout(() => {
-        if (index < codes.length - 1) {
-          codes[index + 1].focus();
-        }
-      }, 10);
+    if (code.value && index < codes.length - 1) {
+      codes[index + 1].focus();
     }
+  });
 
+  code.addEventListener("keydown", (e) => {
     if (e.key === "Backspace") {
       code.value = "";
 
       if (index > 0) {
-        setTimeout(() => {
-          codes[index - 1].focus();
-        }, 10);
+        codes[index - 1].value = "";
+        codes[index - 1].focus();
       }
+
+      e.preventDefault();
     }
   });
 
